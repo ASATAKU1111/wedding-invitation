@@ -1,0 +1,244 @@
+:root {
+    --parchment: #f4e4bc;
+    --parchment-dark: #d4c49c;
+    --ink: #3b2b1a;
+    --ink-light: #5d4a36;
+    --accent: #8b0000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #1a1a1a;
+    font-family: 'IM Fell English SC', serif;
+    color: var(--ink);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Screens */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a1a;
+    z-index: 100;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Parchment Texture Effect */
+.content, .map-contents, .map-fold {
+    background-color: var(--parchment);
+    background-image: 
+        radial-gradient(circle at 50% 50%, transparent 50%, rgba(0,0,0,0.1) 100%),
+        url("https://www.transparenttextures.com/patterns/papyros.png");
+    border: 2px solid var(--ink-light);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.2);
+}
+
+/* Initial Screen */
+.magic-title {
+    font-family: 'Cinzel Decorative', cursive;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.parchment-btn {
+    padding: 1rem 1.5rem;
+    font-family: 'Homemade Apple', cursive;
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.parchment-btn:hover {
+    background: rgba(0,0,0,0.05);
+    transform: scale(1.05);
+}
+
+/* Map Layout */
+#map-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.map-contents {
+    flex: 1;
+    height: 100%;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease 0.5s;
+}
+
+#map-container.active .map-contents {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Folding Mechanism */
+.map-fold {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 10;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left;
+}
+
+.map-fold.left {
+    left: 0;
+    background-image: linear-gradient(to right, var(--parchment), var(--parchment-dark));
+}
+
+.map-fold.right {
+    right: 0;
+    transform-origin: right;
+    background-image: linear-gradient(to left, var(--parchment), var(--parchment-dark));
+}
+
+#map-container.active .map-fold.left {
+    transform: rotateY(-120deg);
+}
+
+#map-container.active .map-fold.right {
+    transform: rotateY(120deg);
+}
+
+/* Typography styles */
+.banner {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.main-title {
+    font-family: 'Cinzel Decorative', cursive;
+    color: var(--accent);
+    font-size: 2rem;
+    margin-top: 0.5rem;
+}
+
+.invitation-text {
+    margin: 2rem 0;
+}
+
+.ink-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.names {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 2.2rem;
+    margin: 1rem 0;
+    color: var(--ink);
+}
+
+.location {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.2rem;
+    color: var(--accent);
+}
+
+.details {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.rsvp-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: var(--ink);
+    color: var(--parchment);
+    text-decoration: none;
+    font-family: 'Cinzel Decorative', cursive;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+}
+
+/* Footprints Animation */
+.footprints-container {
+    position: relative;
+    height: 100px;
+    width: 100%;
+}
+
+.footprint {
+    position: absolute;
+    width: 20px;
+    height: 10px;
+    background: var(--ink);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.footprint.left { left: 40%; top: 50%; animation: walk-left 4s infinite; }
+.footprint.right { right: 40%; top: 50%; animation: walk-right 4s infinite 0.5s; }
+
+@keyframes walk-left {
+    0% { opacity: 0; transform: translate(0, 0) rotate(-20deg); }
+    10% { opacity: 0.6; }
+    50% { opacity: 0.6; transform: translate(-30px, -20px) rotate(-20deg); }
+    100% { opacity: 0; transform: translate(-30px, -20px) rotate(-20deg); }
+}
+
+@keyframes walk-right {
+    0% { opacity: 0; transform: translate(0, 0) rotate(20deg); }
+    10% { opacity: 0.6; }
+    50% { opacity: 0.6; transform: translate(-30px, 20px) rotate(20deg); }
+    100% { opacity: 0; transform: translate(-30px, 20px) rotate(20deg); }
+}
+
+footer {
+    padding-top: 2rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
