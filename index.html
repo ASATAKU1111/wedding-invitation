@@ -72,13 +72,22 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 70%;
-            background-color: #eae1c5;
+            height: 65%;
+            background: linear-gradient(170deg, #e2d9bd 0%, #eae1c5 40%, #ddd4b8 100%);
             background-image: var(--aged-paper);
-            clip-path: polygon(0% 0%, 100% 0%, 100% 20%, 80% 20%, 50% 100%, 20% 20%, 0% 20%);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
             z-index: 21;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.08));
+        }
+        .envelope-flap::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.06) 100%);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
         }
 
         .wax-seal {
@@ -669,7 +678,7 @@
                     <div class="envelope-flap"></div>
 
                     <!-- シーリングワックス -->
-                    <div class="wax-seal" style="top: 45%;"></div>
+                    <div class="wax-seal" style="top: 42%;"></div>
 
                     <div class="text-center z-20">
                         <p class="font-script text-4xl text-[#3b2b1a] mb-2">Mr. & Mrs. Guest</p>
