@@ -919,22 +919,18 @@
                 setTimeout(() => createSparkle(finalSendBtn.getBoundingClientRect()), i * 50);
             }
 
-            // --- Google Sheets Integration ---
-            try {
-                const params = new URLSearchParams();
-                params.append('name', name);
-                params.append('attend', attend);
-                params.append('allergy', allergy);
-                params.append('message', message);
+            // --- Google Sheets Integration (fire-and-forget) ---
+            const params = new URLSearchParams();
+            params.append('name', name);
+            params.append('attend', attend);
+            params.append('allergy', allergy);
+            params.append('message', message);
 
-                await fetch(GAS_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: params
-                });
-            } catch (err) {
-                console.error("Sheets sync failed:", err);
-            }
+            fetch(GAS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: params
+            }).catch(err => console.error("Sheets sync failed:", err));
 
             // Fade out confirmation and show success message
             rsvpConfirm.style.transition = 'opacity 0.8s, transform 0.8s';
